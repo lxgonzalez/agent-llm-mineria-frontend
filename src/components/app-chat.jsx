@@ -16,6 +16,7 @@ export default function ChatPage() {
 
     const sendMessage = async () => {
         if (!input.trim()) return;
+        const upperCaseInput = input.toUpperCase();
 
         // Agregar mensaje del usuario
         const userMessage = { id: messages.length + 1, text: input, sender: "user" };
@@ -24,13 +25,13 @@ export default function ChatPage() {
 
         try {
             // Simular petición a tu endpoint
-            const response = await fetch("http://localhost:8000/chat", {
+            const response = await fetch("http://34.230.238.206:8000/chat", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    message: input,
+                    message: upperCaseInput,
                     session_id: "123"
                 }),
             });
