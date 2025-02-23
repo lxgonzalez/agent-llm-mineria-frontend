@@ -1,0 +1,30 @@
+{
+  "cities": [
+    { "number_city": "0", "name": "AMBATO", "coordinates": [-1.2491, -78.6167] },
+    { "number_city": "1", "name": "AZOGUES", "coordinates": [-2.7393, -78.8486] },
+    { "number_city": "2", "name": "CAYAMBE", "coordinates": [0.0385, -78.1456] },
+    { "number_city": "3", "name": "CHONE", "coordinates": [-0.6987, -80.0944] },
+    { "number_city": "4", "name": "CUENCA", "coordinates": [-2.8974, -78.9976] },
+    { "number_city": "5", "name": "ESMERALDAS", "coordinates": [0.9639, -79.6339] },
+    { "number_city": "6", "name": "GUAYAQUIL", "coordinates": [-2.1894, -79.8891] },
+    { "number_city": "7", "name": "IBARRA", "coordinates": [0.3517, -78.1223] },
+    { "number_city": "8", "name": "LATACUNGA", "coordinates": [-0.9312, -78.6058] },
+    { "number_city": "9", "name": "LOJA", "coordinates": [-4.0079, -79.2113] },
+    { "number_city": "10", "name": "MACHALA", "coordinates": [-3.2581, -79.9574] },
+    { "number_city": "11", "name": "MANTA", "coordinates": [-0.9478, -80.7129] },
+    { "number_city": "12", "name": "MILAGRO", "coordinates": [-2.1309, -79.5942] },
+    { "number_city": "13", "name": "PAUTE", "coordinates": [-2.7913, -78.7656] },
+    { "number_city": "14", "name": "PENINSULA DE SANTA ELENA", "coordinates": [-2.2251, -80.8581] },
+    { "number_city": "15", "name": "PINAS", "coordinates": [-3.6829, -79.6818] },
+    { "number_city": "16", "name": "PUYO", "coordinates": [-1.4921, -77.9778] },
+    { "number_city": "17", "name": "QUEVEDO", "coordinates": [-1.0283, -79.4635] },
+    { "number_city": "18", "name": "QUITO", "coordinates": [-0.1807, -78.4678] },
+    { "number_city": "19", "name": "RIOBAMBA", "coordinates": [-1.6636, -78.6546] },
+    { "number_city": "20", "name": "STO. DOMINGO", "coordinates": [-0.2533, -79.1706] },
+    { "number_city": "21", "name": "ZAMORA", "coordinates": [-4.0678, -78.9543] }
+  ],
+  "big_cities": ["GUAYAQUIL", "QUITO", "CUENCA"],
+  "season": [1, 2, 3, 4, 5, 10, 11, 12]
+}
+
+

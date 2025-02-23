@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { MessageCircleCode } from "lucide-react"
+import { ChartNoAxesCombined, MessageCircleCode } from "lucide-react"
 
 import {
   Sidebar,
@@ -14,6 +14,7 @@ import {
 
 const items = [
   { title: "Agent Help", url: "/chat", icon: MessageCircleCode },
+  { title: "Prediction", url: "/prediction", icon: ChartNoAxesCombined },
 ]
 
 export function AppSidebar() {
@@ -21,7 +22,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>SipForecast</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xl my-4 font-light" >Sip <span className="font-bold">Forecast</span> </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (

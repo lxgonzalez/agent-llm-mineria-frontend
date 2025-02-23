@@ -58,7 +58,7 @@ export default function ChatPage() {
     return (
         <div className="flex min-h-screen bg-gray-200">
             <div className="flex flex-col flex-grow">
-            <div className="flex-grow p-4 overflow-y-auto space-y-4 text-white max-h-[90vh]">
+            <div className="flex-grow p-4 overflow-y-auto space-y-4 text-white max-h-[92vh]">
             {messages.map((msg) => (
                         <div 
                             key={msg.id} 
