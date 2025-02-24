@@ -1,77 +1,72 @@
-import { getDates, isBigCity, isSeason,sendPredictionData } from "@/api/predictionApi";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-
-// Función para eliminar outliers con Winsorizing
-const winsorize = (arr, limit = 0.05) => {
-  const sorted = [...arr].sort((a, b) => a - b);
-  const index = Math.floor(limit * sorted.length);
-  const minVal = sorted[index];
-  const maxVal = sorted[sorted.length - 1 - index];
-
-  return arr.map((x) => Math.min(Math.max(x, minVal), maxVal));
-};
-
-// Función para calcular la media móvil
-const rollingMean = (arr, windowSize = 4) => {
-  return arr.map((_, i) => {
-    const slice = arr.slice(Math.max(0, i - windowSize + 1), i + 1);
-    return slice.reduce((sum, val) => sum + val, 0) / slice.length;
-  });
-};
+import PredictionModal from "./prediction-modal";
+import { getDates, isBigCity, isSeason, sendPredictionData, winsorize, rollingMean } from "@/api/predictionApi";
 
 export default function TableData({ data }) {
-  const [dataApi, setDataApi] = useState({ ciudad: "", ultimas_semanas: [] });
+  const [dataApi, setDataApi] = useState({ ciudad: "", fecha_inicio: "", fecha_fin: "", ultimas_semanas: [] });
+  const [predictions, setPredictions] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (data && data.date) {
       console.log("Datos recibidos:", data);
-
+  
       const bigCity = isBigCity(data.city);
       const datesArray = getDates(data.date);
-
+  
       // Generar valores de ventas aleatorios entre 10,000 y 50,000
       const sales = Array.from({ length: datesArray.length }, () =>
         Math.floor(Math.random() * (50000 - 10000 + 1)) + 10000
       );
-      
-      // Aplicar winsorizing a los valores de ventas
+  
       const cleanSales = winsorize(sales);
-
-      // Aplicar logaritmo (usando Math.log(x + 1))
-      const salesLog = cleanSales.map((qty) => Math.log(qty + 1));
-
-      // Calcular la tendencia (media móvil con ventana de 4)
       const salesTrend = rollingMean(cleanSales);
-
-      const newEntries = datesArray.map((date, index) => {
-        const isInSeason = isSeason(date);
-
-        return {
-          fecha: date,
-          is_big_city: bigCity,
-          season: isInSeason,
-          sales: sales[index],
-          qty_trend: salesTrend[index],
-        };
-      });
-
+  
+      const newEntries = datesArray.map((date, index) => ({
+        fecha: date,
+        is_big_city: bigCity,
+        season: isSeason(date),
+        sales: sales[index],
+        qty_trend: salesTrend[index],
+      }));
+  
       // Ordenar las entradas por fecha
-      newEntries.sort((a, b) => a.fecha - b.fecha);
-
-      // Formatear la fecha para mostrarla en dd/mm/aaaa
+      newEntries.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+  
+      // Formatear la fecha en YYYY-MM-DD
       const formattedEntries = newEntries.map((entry) => ({
         ...entry,
-        fecha: new Intl.DateTimeFormat("es-ES", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        }).format(entry.fecha),
+        fecha: new Date(entry.fecha).toISOString().split("T")[0],
       }));
 
-      setDataApi({ ciudad: data.city, ultimas_semanas: formattedEntries });
+      const fechaInicio = new Date(formattedEntries[formattedEntries.length - 1].fecha);
+      fechaInicio.setDate(fechaInicio.getDate() + 7);
+      const fechaInicioFormatted = fechaInicio.toISOString().split("T")[0];
+        
+      const fechaFin = new Date(formattedEntries[formattedEntries.length - 1].fecha);
+      fechaFin.setDate(fechaFin.getDate() + 21);
+      const fechaFinFormatted = fechaFin.toISOString().split("T")[0];
+
+      setDataApi({
+        ciudad: data.city,
+        fecha_inicio: fechaInicioFormatted, 
+        fecha_fin: fechaFinFormatted,
+        ultimas_semanas: formattedEntries,
+      });
     }
   }, [data]);
+
+  // Manejar el envío de datos y abrir el modal
+  const handlePrediction = async () => {
+    try {
+      const response = await sendPredictionData(dataApi);
+      setPredictions(response.predicciones_semanales || []);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error al obtener predicciones:", error);
+    }
+  };
 
   return (
     <div className="overflow-x-auto p-4">
@@ -97,9 +92,17 @@ export default function TableData({ data }) {
           ))}
         </tbody>
       </table>
-      <Button className="mt-4 bg-gray-600 hover:bg-gray-700" onClick={() => sendPredictionData(dataApi)}>
-          Make Prediction
+      <Button className="mt-4 bg-gray-600 hover:bg-gray-700" onClick={handlePrediction}>
+        Make Prediction
       </Button>
+
+      {/* Modal de predicción */}
+      <PredictionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        predictions={predictions}
+        historicalData={dataApi.ultimas_semanas}
+      />
     </div>
   );
 }

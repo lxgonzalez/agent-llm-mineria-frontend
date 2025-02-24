@@ -3,11 +3,10 @@ import { big_cities, season } from '@/data/cities.json'
 export function getDates(date) {
     const dates = [];
 
-    // Se suma un día a la fecha que llega
     const baseDate = new Date(date);
-    baseDate.setDate(baseDate.getDate() + 1);
+    baseDate.setDate(baseDate.getDate());
 
-    for (let i = 0; i <= 110; i += 7) {
+    for (let i = 7; i <= 117; i += 7) {
         const newDate = new Date(baseDate);
         newDate.setDate(newDate.getDate() - i);
         dates.push(newDate);
@@ -24,12 +23,28 @@ export function isSeason(date) {
     return season.includes(month) ? 1 : 0;
 }
 
+export function winsorize(arr, limit = 0.05) {
+    const sorted = [...arr].sort((a, b) => a - b);
+    const index = Math.floor(limit * sorted.length);
+    const minVal = sorted[index];
+    const maxVal = sorted[sorted.length - 1 - index];
+
+    return arr.map((x) => Math.min(Math.max(x, minVal), maxVal));
+};
+
+export function rollingMean(arr, windowSize = 4) {
+    return arr.map((_, i) => {
+        const slice = arr.slice(Math.max(0, i - windowSize + 1), i + 1);
+        return slice.reduce((sum, val) => sum + val, 0) / slice.length;
+    });
+};
+
 export async function sendPredictionData(data) {
     const dataApi = cleanData(data);
     console.log(dataApi);
 
     try {
-        const response = await fetch("https://api.example.com/prediction", {
+        const response = await fetch("http://3.233.19.147:8000/predict_custom", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -41,16 +56,22 @@ export async function sendPredictionData(data) {
             throw new Error("Error al enviar los datos a la API");
         }
 
-        return await response.json();
+        const jsonResponse = await response.json();
+        console.log(jsonResponse);
+
+        return jsonResponse;
     } catch (error) {
         console.error("API Error:", error);
         throw error;
     }
 }
 
+
 export function cleanData(data) {
     return {
         ciudad: data.ciudad,
+        fecha_inicio: data.fecha_inicio,
+        fecha_fin: data.fecha_fin,
         ultimas_semanas: data.ultimas_semanas.map(({ fecha, ...rest }) => rest)
     };
 }
