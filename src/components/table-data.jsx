@@ -19,6 +19,8 @@ export default function TableData({ data }) {
       const sales = Array.from({ length: datesArray.length }, () =>
         Math.floor(Math.random() * (50000 - 10000 + 1)) + 10000
       );
+      console.log(sales);
+      
   
       const cleanSales = winsorize(sales);
       const salesTrend = rollingMean(cleanSales);
@@ -32,7 +34,7 @@ export default function TableData({ data }) {
       }));
   
       // Ordenar las entradas por fecha
-      newEntries.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+      // newEntries.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
   
       // Formatear la fecha en YYYY-MM-DD
       const formattedEntries = newEntries.map((entry) => ({
@@ -56,6 +58,33 @@ export default function TableData({ data }) {
       });
     }
   }, [data]);
+
+  // Función para actualizar el valor de sales (Qty) y recalcular la tendencia
+  const handleSalesChange = (index, newSalesValue) => {
+    const newSales = Number(newSalesValue);
+    // Actualiza el valor de sales en la entrada correspondiente
+    const updatedEntries = dataApi.ultimas_semanas.map((entry, i) => {
+      if (i === index) {
+        return { ...entry, sales: newSales };
+      }
+      return entry;
+    });
+    // Extrae el array de ventas y aplica winsorize
+    const salesArray = updatedEntries.map(entry => entry.sales);
+    console.log(salesArray);
+
+    const cleanSales = winsorize(salesArray);
+    // Recalcula la tendencia usando los valores winsorizados
+    const updatedTrend = rollingMean(cleanSales);
+    // Actualiza cada entrada con la nueva tendencia
+    const finalEntries = updatedEntries.map((entry, i) => ({
+      ...entry,
+      qty_trend: updatedTrend[i],
+    }));
+  
+    setDataApi({ ...dataApi, ultimas_semanas: finalEntries });
+  };
+  
 
   // Manejar el envío de datos y abrir el modal
   const handlePrediction = async () => {
@@ -86,7 +115,15 @@ export default function TableData({ data }) {
               <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">{item.fecha}</td>
               <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">{item.is_big_city ? "Sí" : "No"}</td>
               <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">{item.season ? "Sí" : "No"}</td>
-              <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">{item.sales}</td>
+              <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">
+                {/* Input editable para Qty */}
+                <input
+                  type="number"
+                  value={item.sales}
+                  onChange={(e) => handleSalesChange(index, e.target.value)}
+                  className="border rounded p-1 w-full"
+                />
+              </td>
               <td className="px-8 py-4 whitespace-nowrap text-sm text-gray-900">{item.qty_trend.toFixed(2)}</td>
             </tr>
           ))}

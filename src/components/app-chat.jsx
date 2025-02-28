@@ -16,8 +16,8 @@ export default function ChatPage() {
 
     const sendMessage = async () => {
         if (!input.trim()) return;
-        const upperCaseInput = input.toUpperCase();
-
+        const upperCaseInput = `¿${input.toUpperCase()}?`;
+        
         // Agregar mensaje del usuario
         const userMessage = { id: messages.length + 1, text: input, sender: "user" };
         setMessages(prev => [...prev, userMessage]);
@@ -25,14 +25,13 @@ export default function ChatPage() {
 
         try {
             // Simular petición a tu endpoint
-            const response = await fetch("http://34.230.238.206:8000/chat", {
+            const response = await fetch("http://34.230.238.206:8000/analyze", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    message: upperCaseInput,
-                    session_id: "123"
+                    question: upperCaseInput,
                 }),
             });
 
@@ -41,9 +40,11 @@ export default function ChatPage() {
             // Agregar respuesta del bot
             const botMessage = { 
                 id: messages.length + 2, 
-                text: data.text.replace(/\n/g, "\n"), 
+                text: data.analysis.replace(/\n/g, "\n"), 
                 sender: "bot" 
             };
+            console.log(botMessage);
+            
             setMessages(prev => [...prev, botMessage]);
 
         } catch (error) {

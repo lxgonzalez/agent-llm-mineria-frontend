@@ -11,8 +11,10 @@ export function getDates(date) {
         newDate.setDate(newDate.getDate() - i);
         dates.push(newDate);
     }
-    return dates;
+
+    return dates.reverse(); // Invierte el array para obtenerlo en orden ascendente
 }
+
 
 export function isBigCity(city) {
     return big_cities.includes(city) ? 1 : 0;
