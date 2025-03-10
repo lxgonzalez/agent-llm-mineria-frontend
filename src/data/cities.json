@@ -1,30 +1,34 @@
 {
   "cities": [
-    { "number_city": "0", "name": "AMBATO", "coordinates": [-1.2491, -78.6167] },
-    { "number_city": "1", "name": "AZOGUES", "coordinates": [-2.7393, -78.8486] },
-    { "number_city": "2", "name": "CAYAMBE", "coordinates": [0.0385, -78.1456] },
-    { "number_city": "3", "name": "CHONE", "coordinates": [-0.6987, -80.0944] },
-    { "number_city": "4", "name": "CUENCA", "coordinates": [-2.8974, -78.9976] },
-    { "number_city": "5", "name": "ESMERALDAS", "coordinates": [0.9639, -79.6339] },
-    { "number_city": "6", "name": "GUAYAQUIL", "coordinates": [-2.1894, -79.8891] },
-    { "number_city": "7", "name": "IBARRA", "coordinates": [0.3517, -78.1223] },
-    { "number_city": "8", "name": "LATACUNGA", "coordinates": [-0.9312, -78.6058] },
-    { "number_city": "9", "name": "LOJA", "coordinates": [-4.0079, -79.2113] },
-    { "number_city": "10", "name": "MACHALA", "coordinates": [-3.2581, -79.9574] },
-    { "number_city": "11", "name": "MANTA", "coordinates": [-0.9478, -80.7129] },
-    { "number_city": "12", "name": "MILAGRO", "coordinates": [-2.1309, -79.5942] },
-    { "number_city": "13", "name": "PAUTE", "coordinates": [-2.7913, -78.7656] },
-    { "number_city": "14", "name": "PENINSULA DE SANTA ELENA", "coordinates": [-2.2251, -80.8581] },
-    { "number_city": "15", "name": "PINAS", "coordinates": [-3.6829, -79.6818] },
-    { "number_city": "16", "name": "PUYO", "coordinates": [-1.4921, -77.9778] },
-    { "number_city": "17", "name": "QUEVEDO", "coordinates": [-1.0283, -79.4635] },
-    { "number_city": "18", "name": "QUITO", "coordinates": [-0.1807, -78.4678] },
-    { "number_city": "19", "name": "RIOBAMBA", "coordinates": [-1.6636, -78.6546] },
-    { "number_city": "20", "name": "STO. DOMINGO", "coordinates": [-0.2533, -79.1706] },
-    { "number_city": "21", "name": "ZAMORA", "coordinates": [-4.0678, -78.9543] }
+    { "number_city": "0", "name": "AMBATO", "items": ["AGUA VIVANT 6 LITROS X 4", "AGUA VIVANT 600 16+4","VIVANT AGUA 1 LITRO", "VIVANT ST LIMONADA 450CC X 40", "VIVANT ST MANZANA 450CC X 40", "VIVANT ST MORA 450CC X 40", "ZHUMIR DURAZNO CAM 350CCX24 NG", "ZHUMIR DURAZNO GR 700CCX12 NG", "ZHUMIR SECO EXTRA 350CCX24 N", "ZHUMIR SECO EXTRA 700CCX12 N"] },
+    { "number_city": "1", "name": "AZOGUES", "items": ["AGUA VIVANT 600 16+4", "NICETEA 1250CC X6", "NICETEA 450CCX24", "VIVANT ST MORA 450CC X 40", "WHISKY CUNINGHAM 750CCX6", "ZHUMIR AGUAR PA SUAVE 350CCX24", "ZHUMIR AGUAR PA SUAVE 700CCX12", "ZHUMIR AGUARDIENTE 125CCX12", "ZHUMIR DURAZNO CAM 350CCX24 NG", "ZHUMIR DURAZNO GR 700CCX12 NG", "ZHUMIR PINA COLADA 700CCX12","ZHUMIR SECO SUAVE 350CCX24 NG"] },
+    { "number_city": "4", "name": "CUENCA", "items": ["AGUA VIVANT 600 16+4", "CUNINGHAM 375", "NICETEA 1250CC X6", "NICETEA 450CCX24", "RON RONERO 375CCX24", "RON RONERO 750CCX12", "SWITCH BONGO 350CCX12 NG", "SWITCH MARACUYA 350CCX12 NG", "VIVANT LIPOTERMICA 500X40", "VIVANT ST MORA 450CC X 40", "WHISKY CUNINGHAM 750CCX6", "ZH CANUTO CANA SELECTA 700CCX6", "ZHUMIR AGUAR PA 350CCX24 RT", "ZHUMIR AGUAR PA SUAVE 700CCX12", "ZHUMIR AGUARDIENTE 125CCX12", "ZHUMIR AGUARDIENTE 1500CCX6", "ZHUMIR DURAZNO CAM 350CCX24 NG", "ZHUMIR PINA COLADA 700CCX12", "ZHUMIR SECO SUAVE 350CCX24 NG", "ZHUMIR SECO SUAVE 700CCX12 NG"] },
+    { "number_city": "6", "name": "GUAYAQUIL", "items": ["AGUA VIVANT 6 LITROS X 4", "AGUA VIVANT 600 16+4", "NICETEA 1250CC X6", "NICETEA 450CCX24", "SWITCH BONGO 350CCX12 NG", "SWITCH MARACUYA 350CCX12 NG", "SWITCH MARACUYA X6 NG", "VIVANT LIPOTERMICA 500X40", "VIVANT ST LIMONADA 450CC X 40", "VIVANT ST MANZANA 450CC X 40", "VIVANT ST MORA 450CC X 40", "ZHUMIR AGUAR PA SUAVE 350CCX24", "ZHUMIR DURAZNO CAM 350CCX24 NG", "ZHUMIR PINK 700CCX12"] },
+    { "number_city": "7", "name": "IBARRA", "items": ["SWITCH BONGO 350CCX12 NG", "WHISKY CUNINGHAM 750CCX6", "ZHUMIR DURAZNO CAM 350CCX24 NG"] },
+    { "number_city": "9", "name": "LOJA", "items": ["AGUA VIVANT 600 16+4", "VIVANT ST LIMONADA 450CC X 40", "VIVANT ST MANZANA 450CC X 40", "ZHUMIR DURAZNO CAM 350CCX24 NG", "ZHUMIR SECO SUAVE 350CCX24 NG", "ZHUMIR SECO SUAVE 700CCX12 NG"] },
+    { "number_city": "10", "name": "MACHALA", "items": ["AGUA VIVANT 6 LITROS X 4", "AGUA VIVANT 600 16+4", "SWITCH BONGO BONGO X6 NG", "VIVANT AGUA 1 LITRO", "VIVANT ST LIMONADA 450CC X 40", "VIVANT ST MANZANA 450CC X 40", "ZHUMIR SECO SUAVE 350CCX24 NG", "ZHUMIR SECO SUAVE 700CCX12 NG"] },
+    { "number_city": "11", "name": "MANTA", "items": ["AGUA VIVANT 600 16+4"] },
+    { "number_city": "12", "name": "MILAGRO", "items": ["AGUA VIVANT 6 LITROS X 4", "AGUA VIVANT 600 16+4", "NICETEA 450CCX24", "VIVANT ST LIMONADA 450CC X 40", "VIVANT ST MANZANA 450CC X 40", "VIVANT ST MORA 450CC X 40", "ZHUMIR SECO EXTRA 350CCX24 N#", "ZHUMIR SECO EXTRA 700CCX12 N#"] },
+    { "number_city": "14", "name": "PENINSULA DE SANTA ELENA", "items": ["AGUA VIVANT 6 LITROS X 4", "NICETEA 1250CC X6", "NICETEA 450CCX24", "SWITCH BONGO 350CCX12 NG", "SWITCH MARACUYA 350CCX12 NG", "VENETTO SANDIA 1500CCX6", "VIVANT ST LIMONADA 450CC X 40", "VIVANT ST MANZANA 450CC X 40", "VIVANT ST MORA 450CC X 40", "ZHUMIR SECO EXTRA 350CCX24 N#", "ZHUMIR SECO EXTRA 700CCX12 N#"] },
+    { "number_city": "16", "name": "PUYO", "items": ["AGUA VIVANT 600 16+4"] },
+    { "number_city": "17", "name": "QUEVEDO", "items": ["AGUA VIVANT 6 LITROS X 4", "AGUA VIVANT 600 16+4", "NICETEA 1250CC X6", "NICETEA 450CCX24", "SWITCH MARACUYA X6 NG", "VIVANT ST LIMONADA 450CC X 40", "WHISKY CUNINGHAM 750CCX6"] },
+    { "number_city": "18", "name": "QUITO", "items": ["AGUA VIVANT 6 LITROS X 4", "AGUA VIVANT 600 16+4", "NICETEA 1250CC X6", "NICETEA 450CCX24", "SWITCH BONGO 350CCX12 NG", "WHISKY CUNINGHAM 750CCX6", "ZHUMIR AGUARDIENTE 125CCX12", "ZHUMIR DURAZNO GR 700CCX12 NG", "ZHUMIR PINK 700CCX12", "ZHUMIR SECO EXTRA 700CCX12 N"] },
+    { "number_city": "19", "name": "RIOBAMBA", "items": ["AGUA VIVANT 6 LITROS X 4", "NICETEA 1250CC X6", "NICETEA 450CCX24", "SWITCH BONGO 350CCX12 NG", "VIVANT ST LIMONADA 450CC X 40", "ZHUMIR DURAZNO CAM 350CCX24 NG", "ZHUMIR DURAZNO GR 700CCX12 NG", "ZHUMIR SECO EXTRA 350CCX24 N", "ZHUMIR SECO EXTRA 700CCX12 N"] },
+    { "number_city": "20", "name": "STO. DOMINGO", "items": ["NICETEA 1250CC X6", "SWITCH BONGO 350CCX12 NG", "SWITCH MARACUYA 350CCX12 NG", "VENETTO SANDIA 1500CCX6", "VIVANT LIPOTERMICA 500X40"] }
   ],
-  "big_cities": ["GUAYAQUIL", "QUITO", "CUENCA"],
-  "season": [1, 2, 3, 4, 5, 10, 11, 12]
+  "big_cities": [
+    "GUAYAQUIL",
+    "QUITO",
+    "CUENCA"
+  ],
+  "season": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    10,
+    11,
+    12
+  ]
 }
-
-

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import PredictionModal from "./prediction-modal";
-import { getDates, isBigCity, isSeason, sendPredictionData, winsorize, rollingMean } from "@/api/predictionApi";
+import { getDates, isBigCity, isSeason, sendPredictionData, winsorize, rollingMean, generateQty } from "@/api/predictionApi";
 
 export default function TableData({ data }) {
-  const [dataApi, setDataApi] = useState({ ciudad: "", fecha_inicio: "", fecha_fin: "", ultimas_semanas: [] });
+  const [dataApi, setDataApi] = useState({ ciudad: "",item:"", fecha_inicio: "", fecha_fin: "", ultimas_semanas: [] });
   const [predictions, setPredictions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -17,7 +17,7 @@ export default function TableData({ data }) {
   
       // Generar valores de ventas aleatorios entre 10,000 y 50,000
       const sales = Array.from({ length: datesArray.length }, () =>
-        Math.floor(Math.random() * (50000 - 10000 + 1)) + 10000
+        generateQty(data.city, data.item)
       );
       console.log(sales);
       
@@ -52,6 +52,7 @@ export default function TableData({ data }) {
 
       setDataApi({
         ciudad: data.city,
+        item: data.item,
         fecha_inicio: fechaInicioFormatted, 
         fecha_fin: fechaFinFormatted,
         ultimas_semanas: formattedEntries,

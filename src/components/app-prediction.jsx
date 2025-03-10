@@ -32,6 +32,7 @@ import TableData from "./table-data"
 
 const formSchema = z.object({
     city: z.string().min(1, "Please select a city."),
+    item: z.string().min(1, "Please select a item."),
     date: z.date({ required_error: "Please select a date." }),
 })
 
@@ -44,6 +45,8 @@ export default function PredictionPage() {
         defaultValues: { city: "", date: undefined },
     })
     const [open, setOpen] = useState(false)
+    const [cityItems, setCityItems] = useState([]);
+    const [openItems, setOpenItems] = useState(false);
 
     function onSubmit(values) {
         const formattedData = {
@@ -51,13 +54,13 @@ export default function PredictionPage() {
             date: values.date ? format(values.date, "yyyy-MM-dd") : null,
         }
         setTableData(formattedData)
-        console.log(formattedData)
+        // console.log(formattedData)
     }
 
     return (
-        <div className="flex flex-col items-center bg-gray-200 h-full">
+        <div className="flex justify-center bg-gray-200 h-full">
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="mt-10 flex justify-center gap-6">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="mt-10 mx-10">
                     {/* City Selector */}
                     <FormField
                         control={form.control}
@@ -71,7 +74,7 @@ export default function PredictionPage() {
                                             variant="outline"
                                             role="combobox"
                                             aria-expanded={open}
-                                            className="w-[200px] justify-between"
+                                            className="w-[350px] justify-between"
                                         >
                                             {field.value
                                                 ? cities.find((city) => city.name === field.value)?.name
@@ -79,7 +82,7 @@ export default function PredictionPage() {
                                             <ChevronsUpDown className="opacity-50" />
                                         </Button>
                                     </PopoverTrigger>
-                                    <PopoverContent className="w-[200px] p-0">
+                                    <PopoverContent className="w-[300px] p-0">
                                         <Command>
                                             <CommandInput placeholder="Search city..." className="h-9" />
                                             <CommandList>
@@ -92,6 +95,15 @@ export default function PredictionPage() {
                                                             onSelect={(currentValue) => {
                                                                 field.onChange(currentValue === field.value ? "" : currentValue)
                                                                 setOpen(false)
+                                                                // Update items when city changes
+                                                                const selectedCity = cities.find((c) => c.name === currentValue)
+                                                                if (selectedCity) {
+                                                                    setCityItems(selectedCity.items)
+                                                                    // Reset items field when city changes
+                                                                    form.setValue("item", "")
+                                                                } else {
+                                                                    setCityItems([])
+                                                                }
                                                             }}
                                                         >
                                                             {city.name}
@@ -99,6 +111,63 @@ export default function PredictionPage() {
                                                                 className={cn(
                                                                     "ml-auto",
                                                                     field.value === city.name ? "opacity-100" : "opacity-0"
+                                                                )}
+                                                            />
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
+                                <div className="min-h-[20px]">
+                                    <FormMessage />
+                                </div>
+                            </FormItem>
+                        )}
+                    />
+                    {/* Items Selector */}
+
+                    <FormField
+                        control={form.control}
+                        name="item"
+                        render={({ field }) => (
+                            <FormItem className="flex flex-col">
+                                <FormLabel>Items</FormLabel>
+                                <Popover open={openItems} onOpenChange={setOpenItems}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            aria-expanded={openItems}
+                                            className="w-[350px] justify-between"
+                                        >
+                                            {field.value
+                                                ? cityItems.find((item) => item === field.value)
+                                                : "Select item..."}
+                                            <ChevronsUpDown className="opacity-50" />
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-[350px] p-0">
+                                        <Command>
+                                            <CommandInput placeholder="Search item..." className="h-9" />
+                                            <CommandList>
+                                                <CommandEmpty>No item found.</CommandEmpty>
+                                                <CommandGroup>
+                                                    {cityItems.map((item) => (
+                                                        <CommandItem
+                                                            key={item}
+                                                            value={item}
+                                                            onSelect={(currentValue) => {
+                                                                field.onChange(currentValue === field.value ? "" : currentValue)
+                                                                setOpenItems(false)
+                                                            }}
+                                                        >
+                                                            {item}
+                                                            <Check
+                                                                className={cn(
+                                                                    "ml-auto",
+                                                                    field.value === item ? "opacity-100" : "opacity-0"
                                                                 )}
                                                             />
                                                         </CommandItem>
@@ -124,7 +193,7 @@ export default function PredictionPage() {
                                 <FormLabel>Date</FormLabel>
                                 <Popover>
                                     <PopoverTrigger asChild>
-                                        <Button variant="outline" className="w-[200px] justify-between">
+                                        <Button variant="outline" className="w-[350px] justify-between">
                                             {field.value ? format(field.value, "PPP") : "Pick a date"}
                                             <Calendar className="opacity-50" />
                                         </Button>
@@ -152,13 +221,15 @@ export default function PredictionPage() {
                     />
 
                     {/* Botón de envío */}
-                    <div className="mt-5">
+                    <div className="">
                         <Button type="submit">Generate Data</Button>
                     </div>
                 </form>
             </Form>
             {/* Pasar los datos a la tabla */}
+            <div className="flex-1">
             <TableData key={JSON.stringify(tableData)} data={tableData} />
+            </div>
         </div>
     )
 }

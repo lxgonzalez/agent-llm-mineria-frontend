@@ -7,7 +7,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 export default function PredictionModal({ isOpen, onClose, predictions, historicalData }) {
   // Extraemos las fechas de los datos históricos y de las predicciones
   const historicalDates = historicalData?.map(item => item.fecha) || [];
-  const predictionDates = predictions?.map(pred => pred.fecha_referencia) || [];
+  const predictionDates = predictions?.map(pred => pred.semana) || [];
   const allDates = [...historicalDates, ...predictionDates];
   
   // Obtenemos las fechas únicas ordenadas
@@ -22,7 +22,7 @@ export default function PredictionModal({ isOpen, onClose, predictions, historic
   
   const predictedSalesMap = {};
   predictions?.forEach(pred => {
-    predictedSalesMap[pred.fecha_referencia] = pred.ventas_predichas;
+    predictedSalesMap[pred.semana] = pred.ventas_predichas;
   });
   
   // Creamos arreglos de datos alineados a uniqueDates (null donde no hay dato)
@@ -138,7 +138,7 @@ export default function PredictionModal({ isOpen, onClose, predictions, historic
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {predictions?.map((pred, index) => (
             <div key={index} className="p-4 bg-white rounded-lg shadow-md border">
-              <p className="text-gray-500 text-xs">📅 {pred.fecha_referencia}</p>
+              <p className="text-gray-500 text-xs">📅 {pred.semana}</p>
               <p className="text-lg font-bold mt-2">💰 {pred.ventas_predichas.toLocaleString()} ventas</p>
             </div>
           ))}
