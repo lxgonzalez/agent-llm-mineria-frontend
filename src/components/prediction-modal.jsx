@@ -9,26 +9,26 @@ export default function PredictionModal({ isOpen, onClose, predictions, historic
   const historicalDates = historicalData?.map(item => item.fecha) || [];
   const predictionDates = predictions?.map(pred => pred.fecha_referencia) || [];
   const allDates = [...historicalDates, ...predictionDates];
-  
+
   // Obtenemos las fechas únicas ordenadas
   const uniqueDates = [...new Set(allDates)];
   uniqueDates.sort((a, b) => new Date(a) - new Date(b));
-  
+
   // Creamos mapas para acceder rápidamente a las ventas
   const historicalSalesMap = {};
   historicalData?.forEach(item => {
     historicalSalesMap[item.fecha] = item.sales;
   });
-  
+
   const predictedSalesMap = {};
   predictions?.forEach(pred => {
     predictedSalesMap[pred.fecha_referencia] = pred.ventas_predichas;
   });
-  
+
   // Creamos arreglos de datos alineados a uniqueDates (null donde no hay dato)
   const historicalChartData = uniqueDates.map(date => historicalSalesMap[date] ?? null);
   const predictedChartData = uniqueDates.map(date => predictedSalesMap[date] ?? null);
-  
+
   // Buscamos el índice del último valor histórico y el primer valor predicho
   let lastHistoricalIndex = -1;
   for (let i = uniqueDates.length - 1; i >= 0; i--) {
@@ -44,7 +44,7 @@ export default function PredictionModal({ isOpen, onClose, predictions, historic
       break;
     }
   }
-  
+
   let connectingData = [];
   if (lastHistoricalIndex !== -1 && firstPredictedIndex !== -1) {
     const historicalDate = uniqueDates[lastHistoricalIndex];
@@ -56,7 +56,7 @@ export default function PredictionModal({ isOpen, onClose, predictions, historic
       { x: predictedDate, y: predictedValue },
     ];
   }
-  
+
   const chartData = {
     labels: uniqueDates,
     datasets: [
@@ -133,22 +133,19 @@ export default function PredictionModal({ isOpen, onClose, predictions, historic
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl p-6">
         <DialogHeader>
-          <DialogTitle className="text-center text-xl font-semibold">📊 Predicciones Próximas 3 Semanas</DialogTitle>
+          <DialogTitle className="text-center text-xl font-semibold">📊 Predicción Próxima Semana</DialogTitle>
           <DialogDescription className="text-sm">
             <span className="font-semibold">📦 Item:</span> {item}
           </DialogDescription>
           <DialogDescription className="text-sm">
             <span className="font-semibold">🏢 Ciudad:</span> {ciudad}
           </DialogDescription>
-        </DialogHeader>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {predictions?.map((pred, index) => (
-            <div key={index} className="p-4 bg-white rounded-lg shadow-md border">
-              <p className="text-gray-500 text-xs">📅 {pred.fecha_referencia}</p>
-              <p className="text-lg font-bold mt-2">💰 {pred.ventas_predichas.toLocaleString()} ventas</p>
-            </div>
+          {predictions?.map((pred) => (
+            <DialogDescription className="text-base">
+              <span className="font-semibold">📅 {pred.fecha_referencia}:</span> {pred.ventas_predichas.toLocaleString()}
+            </DialogDescription>
           ))}
-        </div>
+        </DialogHeader>
         <div className="mt-6">
           <Line data={chartData} options={options} />
         </div>

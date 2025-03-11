@@ -17,7 +17,7 @@ export default function TableData({ data }) {
   
       // Generar valores de ventas aleatorios entre 10,000 y 50,000
       const sales = Array.from({ length: datesArray.length }, () =>
-        generateQty(data.city, data.item)
+        generateQty(data.city, data.item)       
       );
       console.log(sales);
       
@@ -47,7 +47,7 @@ export default function TableData({ data }) {
       const fechaInicioFormatted = fechaInicio.toISOString().split("T")[0];
         
       const fechaFin = new Date(formattedEntries[formattedEntries.length - 1].fecha);
-      fechaFin.setDate(fechaFin.getDate() + 21);
+      fechaFin.setDate(fechaFin.getDate() + 7);
       const fechaFinFormatted = fechaFin.toISOString().split("T")[0];
 
       setDataApi({
