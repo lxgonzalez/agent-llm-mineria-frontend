@@ -140,6 +140,8 @@ export default function TableData({ data }) {
         onClose={() => setIsModalOpen(false)}
         predictions={predictions}
         historicalData={dataApi.ultimas_semanas}
+        item={dataApi.item}
+        ciudad={dataApi.ciudad}
       />
     </div>
   );
